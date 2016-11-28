@@ -16,6 +16,10 @@ footer * > a:hover {
     color: #666;
 }
 
+ul {
+    -webkit-padding-start: 20px;
+}
+
 /*#footer-about > span {*/
     /*margin-left: 12px;*/
 /*}*/
