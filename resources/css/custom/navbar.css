@@ -19,6 +19,7 @@
 
 .euler-userinfo {
     float: right;
+    height: 50px;
     line-height: 50px;
 }
 
