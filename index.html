@@ -5,14 +5,16 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!--<meta name="description" content="">-->
-  <!--<meta name="author" content="">-->
-  <!--<link rel="icon" href="favicon.ico">-->
+  <meta name="description" content="Intro Site of Euler Project">
+  <meta name="author" content="cFrost.sun">
+  <link rel="icon" href="favicon.ico">
 
   <title>Euler Project</title>
 
   <link rel="stylesheet" href="resources/css/lib/bootstrap.min.css">
   <link rel="stylesheet" href="resources/css/icon.css">
+  <link rel="stylesheet" href="resources/css/custom/global.css">
+  <link rel="stylesheet" href="resources/css/custom/navbar.css">
   <link rel="stylesheet" href="resources/css/custom/index.css">
 </head>
 
@@ -27,9 +29,9 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <div id="userinfo-s">
-        <div class="btn-group signed">
-          <button type="button" class="dropdown-toggle btn-user" data-toggle="dropdown">
+      <div class="euler-userinfo euler-display-small-screen euler-display-signed">
+        <div class="btn-group">
+          <button type="button" class="dropdown-toggle euler-btn-user-menu" data-toggle="dropdown">
           cFrost <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" role="menu">
@@ -40,26 +42,26 @@
           <li><a href="javascript:void(0)" onclick="signout()">Sign out</a></li>
           </ul>
         </div>
-        <span class="unsigned">
-          <div class="btn-group">
-          <button type="button" class="dropdown-toggle btn-user" data-toggle="dropdown">
-          <span class="glyphicon glyphicon-user"></span>
-          </button>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="javascript:void(0)" onclick="signin()">Sign in</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Sign up</a></li>
-          </ul>
-          </div>
-        </span>
+      </div>
+      <div class="euler-userinfo euler-display-small-screen euler-display-unsigned">
+        <div class="btn-group">
+        <button type="button" class="dropdown-toggle euler-btn-sign" data-toggle="dropdown">
+        <span class="glyphicon glyphicon-user"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="javascript:void(0)" onclick="signin()">Sign in</a></li>
+          <li class="divider"></li>
+          <li><a href="#">Sign up</a></li>
+        </ul>
+        </div>
       </div>
       <a id="brand" class="navbar-brand " href="#">
         <span class="eulerproject-160-40-fff"></span>
       </a>
     </div>
-    <div id="userinfo-l">
-      <div class="btn-group signed">
-        <button type="button" class="dropdown-toggle btn-user" data-toggle="dropdown">
+    <div class="euler-userinfo euler-display-large-screen euler-display-signed">
+      <div class="btn-group ">
+        <button type="button" class="dropdown-toggle euler-btn-user-menu" data-toggle="dropdown">
           cFrost <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
@@ -69,10 +71,15 @@
           <li><a href="javascript:void(0)" onclick="signout()">Sign out</a></li>
         </ul>
       </div>
-      <span class="unsigned">
-        <button type="button" class="btn btn-success btn-sign" onclick="signin()">Sign in</button>
-        <button type="button" class="btn btn-default btn-sign">Sign up</button>
-      </span>
+    </div>
+    <div class="euler-userinfo euler-display-large-screen euler-display-unsigned">
+      <div class="euler-btn-group euler-btn-sign-group">
+          <span>
+            <button type="button" class="btn btn-success euler-btn-sign" onclick="signin()">Sign in</button>
+          </span><span>
+            <button type="button" class="btn btn-default euler-btn-sign">Sign up</button>
+          </span>
+      </div>
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
@@ -125,13 +132,13 @@
   });
 
   function signin() {
-    $(".signed").show();
-    $(".unsigned").hide();
+    $(".euler-display-signed").removeClass("euler-hidden");
+    $(".euler-display-unsigned").addClass("euler-hidden");
   }
 
   function signout() {
-    $(".signed").hide();
-    $(".unsigned").show();
+    $(".euler-display-signed").addClass("euler-hidden");
+    $(".euler-display-unsigned").removeClass("euler-hidden");
   }
 </script>
 </body>

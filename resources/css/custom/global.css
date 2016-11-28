@@ -1,0 +1,51 @@
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    color: #333;
+}
+
+body,
+a,
+a:hover {
+    color: #333;
+}
+
+footer {
+    text-align: center;
+}
+
+footer,
+footer * > a,
+footer * > a:hover {
+    color: #666;
+}
+
+@media screen and (min-width: 768px) {
+    .euler-display-large-screen {
+        display: inline-block;
+    }
+
+    .euler-display-small-screen {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .euler-display-small-screen {
+        display: inline-block;
+    }
+
+    .euler-display-large-screen {
+        display: none;
+    }
+}
+
+.euler-hidden {
+    display:none;
+}
+
+.euler-btn-group > span {
+    display:inline-block;
+    width:50%;
+    text-align: center;
+}
