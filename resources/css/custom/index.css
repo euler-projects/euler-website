@@ -1,0 +1,82 @@
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    color: #333;
+}
+
+body,
+a,
+a:hover {
+    color: #333;
+}
+
+footer {
+    text-align: center;
+}
+
+footer,
+footer * > a,
+footer * > a:hover {
+    color: #666;
+}
+
+@media screen and (min-width: 768px) {
+    #navbar {
+        float: right;
+    }
+    #userinfo-l {
+        display: inline-block;
+    }
+    #userinfo-s {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #userinfo-s {
+        display: inline-block;
+    }
+
+    #userinfo-l {
+        display: none;
+    }
+}
+
+#userinfo-l,
+#userinfo-s {
+    float: right;
+    line-height: 50px;
+}
+
+.navbar-brand {
+    padding: 10px 10px;
+    font-size: 18px;
+    line-height: 30px;
+}
+
+.btn-sign {
+    height: 30px;
+    width: 70px;
+    line-height: 30px;
+    padding: 0;
+    margin-right: 3px;
+    margin-left: 3px;
+}
+
+.btn-user {
+    height: 30px;
+    width: 70px;
+    line-height: 30px;
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    color: #eee;
+}
+
+.dropdown-menu  {
+    min-width: 90px;
+}
+
+.navbar-toggle {
+    margin-left: 6px;
+}
