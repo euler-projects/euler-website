@@ -21,27 +21,27 @@ footer * > a:hover {
 }
 
 @media screen and (min-width: 768px) {
-    .euler-display-large-screen {
+    .euler-display-sm {
         display: inline-block;
     }
 
-    .euler-display-small-screen {
+    .euler-hidden-sm {
         display: none;
     }
 }
 
 @media screen and (max-width: 767px) {
-    .euler-display-small-screen {
+    .euler-display-xs {
         display: inline-block;
     }
 
-    .euler-display-large-screen {
+    .euler-hidden-xs {
         display: none;
     }
 }
 
 .euler-hidden {
-    display:none;
+    display:none;!important
 }
 
 .euler-btn-group > span {

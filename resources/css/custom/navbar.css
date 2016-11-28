@@ -26,12 +26,12 @@
     width: 160px;
 }
 
-.euler-display-large-screen .euler-btn-sign {
+.euler-display-sm .euler-btn-sign {
     width:70px;
 }
 
 .euler-btn-user-menu,
-.euler-display-small-screen .euler-btn-sign {
+.euler-display-xs .euler-btn-sign {
     height: 30px;
     width: 70px;
     line-height: 30px;
