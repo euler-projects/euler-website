@@ -30,6 +30,10 @@
     width:70px;
 }
 
+.euler-display-sm .euler-btn-sign:focus {
+    outline: medium;
+}
+
 .euler-btn-user-menu,
 .euler-display-xs .euler-btn-sign {
     height: 30px;

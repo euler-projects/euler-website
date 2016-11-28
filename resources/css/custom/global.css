@@ -10,15 +10,19 @@ a:hover {
     color: #333;
 }
 
-footer {
-    text-align: center;
-}
-
 footer,
 footer * > a,
 footer * > a:hover {
     color: #666;
 }
+
+/*#footer-about > span {*/
+    /*margin-left: 12px;*/
+/*}*/
+
+/*#footer-about > .footer-about-first {*/
+    /*margin-left: 0;*/
+/*}*/
 
 @media screen and (min-width: 768px) {
     .euler-display-sm {
@@ -27,6 +31,10 @@ footer * > a:hover {
 
     .euler-hidden-sm {
         display: none;
+    }
+
+    #footer-about {
+        text-align: right;
     }
 }
 
@@ -37,6 +45,11 @@ footer * > a:hover {
 
     .euler-hidden-xs {
         display: none;
+    }
+
+    #footer-about {
+        text-align: left;
+        margin-top: 20px;
     }
 }
 
