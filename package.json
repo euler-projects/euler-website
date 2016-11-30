@@ -1,0 +1,27 @@
+{
+  "name": "euler-website",
+  "version": "0.1.0",
+  "description": "Intro website of Euler Project",
+  "main": "glupfile.js",
+  "dependencies": {
+    "gulp": "^3.9.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/euler-projects/euler-website.git"
+  },
+  "keywords": [
+    "euler",
+    "framework"
+  ],
+  "author": "cFrost",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/euler-projects/euler-website/issues"
+  },
+  "homepage": "https://github.com/euler-projects/euler-website#readme"
+}
