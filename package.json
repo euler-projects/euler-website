@@ -1,25 +1,21 @@
 {
-  "name": "euler-website",
+  "name": "euler-project",
   "version": "0.1.0",
-  "description": "Intro website of Euler Project",
-  "main": "glupfile.js",
+  "description": "Intro site of Euler Porject",
+  "main": "index.js",
   "dependencies": {
-    "gulp": "^3.9.1"
+    "lodash": "^4.17.2"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "test"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/euler-projects/euler-website.git"
   },
-  "keywords": [
-    "euler",
-    "framework"
-  ],
   "author": "cFrost",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/euler-projects/euler-website/issues"
   },
