@@ -1,0 +1,86 @@
+.euler-userinfo {
+    float: right;
+    height: 50px;
+}
+
+.euler-userinfo > .btn-group {
+    vertical-align: inherit;
+}
+
+.euler-btn-sign-group {
+    width: 160px;
+    height: 50px;
+    padding: 8px 0 8px 0;
+}
+
+.euler-btn-sign {
+    width:70px;
+}
+
+.euler-btn-user-menu {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    height: 20px;
+    width: auto;
+    min-width: 70px;
+    line-height: 20px;
+    border: none;
+    padding: 0;
+    color: #eee;
+    background-color: transparent;
+    display: inline-block;
+}
+
+.euler-btn-xs-sign,
+.euler-btn-xs-user-menu {
+    height: 50px;
+    width: 50px;
+    line-height: 50px;
+    text-align: center;
+    border: none;
+    padding: 0;
+    background-color: transparent;
+    display: inline-block;
+
+}
+.euler-btn-xs-sign {
+    color: #eee;
+}
+
+.euler-btn-xs-user-menu {
+}
+
+.euler-btn-user-menu-name {
+    display: inline-block;
+    /*vertical-align: middle;*/
+    max-width: 100px;
+    height: 20px;
+    line-height: 20px;
+    overflow: hidden;
+}
+.euler-btn-user-menu-caret{
+    margin-top: -12px;
+}
+
+
+.euler-userinfo-menu  {
+    min-width: 90px;
+    right: 0px;
+    left: auto;
+    text-align: center;
+}
+
+.euler-userinfo-menu-xs {
+    min-width: 100px;
+    width: 100px;
+    right: -25px;
+    left: auto;
+    text-align: center;
+}
+
+.euler-userinfo-user-icon {
+    width:34px;
+    height:34px;
+    border-radius:50px;
+    background-color: transparent;
+}

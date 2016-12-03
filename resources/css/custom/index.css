@@ -1,13 +1,12 @@
-/*My CSS*/
-.euler-img {
-    float: right;
-    width: 184px;
-    height:228px;
-    background-image:url(../../images/euler.png);
-    background-repeat:no-repeat;
-    background-size:contain;
-    display:inline-block;
+@media screen and (min-width: 768px) {
+    #footer-about {
+        text-align: right;
+    }
 }
-/*Move to global.css*/
 
-/*Move to navbar.css*/
+@media screen and (max-width: 767px) {
+    #footer-about {
+        text-align: left;
+        margin-top: 20px;
+    }
+}

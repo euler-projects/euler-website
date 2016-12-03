@@ -1,7 +1,6 @@
 body {
     padding-top: 50px;
     padding-bottom: 20px;
-    color: #333;
 }
 
 body,
@@ -20,49 +19,16 @@ ul {
     -webkit-padding-start: 20px;
 }
 
-/*#footer-about > span {*/
-    /*margin-left: 12px;*/
-/*}*/
-
-/*#footer-about > .footer-about-first {*/
-    /*margin-left: 0;*/
-/*}*/
-
-@media screen and (min-width: 768px) {
-    .euler-display-sm {
-        display: inline-block;
-    }
-
-    .euler-hidden-sm {
-        display: none;
-    }
-
-    #footer-about {
-        text-align: right;
-    }
-}
-
-@media screen and (max-width: 767px) {
-    .euler-display-xs {
-        display: inline-block;
-    }
-
-    .euler-hidden-xs {
-        display: none;
-    }
-
-    #footer-about {
-        text-align: left;
-        margin-top: 20px;
-    }
-}
-
 .euler-hidden {
-    display:none;!important
+    display:none !important;
 }
 
 .euler-btn-group > span {
     display:inline-block;
     width:50%;
     text-align: center;
+}
+
+.btn:focus {
+    outline: medium !important;
 }

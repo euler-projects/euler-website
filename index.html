@@ -15,13 +15,16 @@
   <link rel="stylesheet" href="resources/css/icon.css">
   <link rel="stylesheet" href="resources/css/custom/global.css">
   <link rel="stylesheet" href="resources/css/custom/navbar.css">
+  <link rel="stylesheet" href="resources/css/custom/global-responsive-pack.css">
+  <link rel="stylesheet" href="resources/css/custom/navbar-responsive-pack.css">
+  <link rel="stylesheet" href="resources/css/custom/userinfo.css">
   <link rel="stylesheet" href="resources/css/custom/index.css">
 </head>
 
 <body>
 
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container">
+  <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
         <span class="sr-only">Toggle navigation</span>
@@ -31,10 +34,10 @@
       </button>
       <div class="euler-userinfo euler-display-xs euler-hidden-sm euler-display-signed">
         <div class="btn-group">
-          <button type="button" class="dropdown-toggle euler-btn-user-menu" data-toggle="dropdown">
-          cFrost <span class="caret"></span>
+          <button type="button" class="dropdown-toggle euler-btn-xs-user-menu" data-toggle="dropdown">
+            <img class="euler-userinfo-user-icon" src="resources/images/tx.jpg">
           </button>
-          <ul class="dropdown-menu" role="menu">
+          <ul class="dropdown-menu euler-userinfo-menu-xs" role="menu">
           <li><a href="#">Profile</a></li>
           <li class="divider"></li>
           <li><a href="#">Setting</a></li>
@@ -45,26 +48,26 @@
       </div>
       <div class="euler-userinfo euler-display-xs euler-hidden-sm euler-display-unsigned">
         <div class="btn-group">
-        <button type="button" class="dropdown-toggle euler-btn-sign" data-toggle="dropdown">
+          <button type="button" class="dropdown-toggle euler-btn-xs-sign" data-toggle="dropdown">
         <span class="glyphicon glyphicon-user"></span>
         </button>
-        <ul class="dropdown-menu" role="menu">
+        <ul class="dropdown-menu euler-userinfo-menu-xs" role="menu">
           <li><a href="javascript:void(0)" onclick="signin()">Sign in</a></li>
           <li class="divider"></li>
           <li><a href="#">Sign up</a></li>
         </ul>
         </div>
       </div>
-      <a id="brand" class="navbar-brand " href="/">
+      <a id="brand" class="navbar-brand" href="/">
         <span class="eulerproject-160-40-fff"></span>
       </a>
     </div>
     <div class="euler-userinfo euler-display-sm euler-hidden-xs euler-display-signed">
       <div class="btn-group ">
         <button type="button" class="dropdown-toggle euler-btn-user-menu" data-toggle="dropdown">
-          cFrost <span class="caret"></span>
+          <span class="euler-btn-user-menu-name">cFrost</span> <span class="caret euler-btn-user-menu-caret"></span>
         </button>
-        <ul class="dropdown-menu" role="menu">
+        <ul class="dropdown-menu euler-userinfo-menu" role="menu">
           <li><a href="#">Profile</a></li>
           <li><a href="#">Setting</a></li>
           <li class="divider"></li>
@@ -75,7 +78,7 @@
     <div class="euler-userinfo euler-display-sm euler-hidden-xs euler-display-unsigned">
       <div class="euler-btn-group euler-btn-sign-group">
           <span>
-            <button type="button" class="btn btn-success euler-btn-sign euler-focus-fix" onclick="signin()">Sign in</button>
+            <button type="button" class="btn btn-success euler-btn-sign" onclick="signin()">Sign in</button>
           </span><span>
             <button type="button" class="btn btn-default euler-btn-sign">Sign up</button>
           </span>
@@ -137,20 +140,21 @@
       </ul>
     </div>
   </div>
+</div><!-- /.container -->
 
-  <hr>
-
-  <footer>
+<footer>
+  <div class="container">
+    <hr>
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-sm-8">
         <div id="footer-copyright">&copy;2016&nbsp;Euler Project&nbsp;<a id="icp" href="http://www.miitbeian.gov.cn" target="_Blank">粤ICP备15054669号</a></div>
       </div>
-      <div class="col-md-4">
+      <div class="col-sm-4">
         <div id="footer-about"><a href="http://cfrost.net">Designed by cFrost</a></div>
       </div>
     </div>
-  </footer>
-</div><!-- /.container -->
+  </div>
+</footer>
 
 <script src="resources/js/lib/jquery-1.12.4.min.js"></script>
 <script src="resources/js/lib/bootstrap.min.js"></script>
@@ -162,7 +166,7 @@
   });
 
   function signin() {
-    return;
+    //return;
     $(".euler-display-signed").removeClass("euler-hidden");
     $(".euler-display-unsigned").addClass("euler-hidden");
   }
