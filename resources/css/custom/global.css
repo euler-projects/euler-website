@@ -32,3 +32,16 @@ ul {
 .btn:focus {
     outline: medium !important;
 }
+
+.euler-table td {
+    vertical-align: middle !important;
+}
+
+.euler-table-signal-search-box {
+    max-width: 300px;
+    float: right;
+}
+
+.euler-btn-group-page{
+    text-align: center;
+ }

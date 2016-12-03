@@ -1,0 +1,36 @@
+.euler-dashboard-user-ck-th {
+    width: 10px;
+}
+
+.euler-dashboard-user-username-th {
+    width: 160px;
+
+}
+.euler-dashboard-user-name-th {
+    width: auto;
+
+}
+
+.euler-dashboard-user-email-th {
+    width: 260px;
+
+}
+
+.euler-dashboard-user-status-th {
+    width: 100px;
+
+}
+
+.euler-dashboard-user-action-th {
+    width: 160px;
+    min-width: 160px;
+
+}
+
+.euler-user-action-td {
+    text-align: right;
+}
+
+.euler-user-action-td .btn {
+    width: 66px;
+}

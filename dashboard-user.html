@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Note there is no responsive meta tag here -->
+
+  <link rel="icon" href="favicon.ico">
+
+  <title>Dashboard [Users]</title>
+
+  <link rel="stylesheet" href="resources/css/lib/bootstrap.min.css">
+  <link rel="stylesheet" href="resources/css/custom/non-responsive.css">
+  <link rel="stylesheet" href="resources/css/custom/global.css">
+  <link rel="stylesheet" href="resources/css/custom/navbar.css">
+  <link rel="stylesheet" href="resources/css/custom/userinfo.css">
+  <!--<link rel="stylesheet" href="resources/css/custom/sticky-footer.css">-->
+  <link rel="stylesheet" href="resources/css/custom/dashboard.css">
+  <link rel="stylesheet" href="resources/css/custom/dashboard-user.css">
+  <link rel="stylesheet" href="resources/css/icon.css">
+</head>
+
+<body>
+
+<!-- Fixed navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <a id="brand" class="navbar-brand " href="/">
+      <span class="eulerproject-160-40-fff"></span>
+    </a>
+    <div id="navbar" class="navbar-collapse collapse">
+      <div class="euler-userinfo euler-display-signed">
+        <div class="btn-group ">
+          <button type="button" class="dropdown-toggle euler-btn-user-menu" data-toggle="dropdown">
+            <span class="euler-btn-user-menu-name">cFrost</span> <span class="caret euler-btn-user-menu-caret"></span>
+          </button>
+          <ul class="dropdown-menu euler-userinfo-menu" role="menu">
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Setting</a></li>
+            <li class="divider"></li>
+            <li><a href="javascript:void(0)" onclick="signout()">Sign out</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="euler-userinfo euler-display-unsigned">
+        <div class="euler-btn-group euler-btn-sign-group">
+          <span>
+            <button type="button" class="btn btn-success euler-btn-sign" onclick="signin()">Sign in</button>
+          </span><span>
+            <button type="button" class="btn btn-default euler-btn-sign">Sign up</button>
+          </span>
+        </div>
+      </div>
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-2 col-xs-3 sidebar">
+      <ul class="nav nav-sidebar">
+        <li class="active"><a href="#">Users</a></li>
+        <li><a href="#">Privileges</a></li>
+        <li><a href="#">Roles</a></li>
+      </ul>
+      <ul class="nav nav-sidebar">
+        <li><a href="">Nav item</a></li>
+        <li><a href="">Nav item again</a></li>
+        <li><a href="">One more nav</a></li>
+        <li><a href="">Another nav item</a></li>
+        <li><a href="">More navigation</a></li>
+      </ul>
+      <ul class="nav nav-sidebar">
+        <li><a href="">Nav item again</a></li>
+        <li><a href="">One more nav</a></li>
+        <li><a href="">Another nav item</a></li>
+      </ul>
+    </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-xs-9 col-xs-offset-3 main">
+      <h1 class="page-header">Users</h1>
+
+      <div class="row euler-dashboard-controller">
+        <div class="col-xs-6">
+          <button type="button" class="btn btn-success">Create User</button>
+          <button type="button" class="btn btn-danger">Block User</button>
+        </div>
+        <div class="col-xs-6">
+          <form action="javascript:void(0)" onsubmit="onSearch(this)">
+            <span class="input-group euler-table-signal-search-box">
+                <input type="text" class="form-control" name="key">
+                <span class="input-group-btn">
+                  <button type="submit" class="btn btn-default" type="button">Search</button>
+              </span>
+            </span>
+          </form>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-striped euler-table">
+          <thead>
+          <tr>
+            <th class="euler-dashboard-user-ck-th"><input type="checkbox"></th>
+            <th class="euler-dashboard-user-username-th">Username</th>
+            <th class="euler-dashboard-user-name-th">Name</th>
+            <th class="euler-dashboard-user-email-th">Email</th>
+            <th class="euler-dashboard-user-status-th">Status</th>
+            <th class="euler-dashboard-user-action-th"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td>Lorem</td>
+            <td>Tom Hanks</td>
+            <td>user@eulerproject.io</td>
+            <td>active</td>
+            <td class="euler-user-action-td">
+              <button type="button" class="btn btn-danger btn-user-action">Block</button>
+              <button type="button" class="btn btn-default btn-user-action">Edit</button>
+            </td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td>Lorem</td>
+            <td>Tom Hanks</td>
+            <td>user@eulerproject.io</td>
+            <td>active</td>
+            <td class="euler-user-action-td">
+              <button type="button" class="btn btn-danger btn-user-action">Block</button>
+              <button type="button" class="btn btn-default btn-user-action">Edit</button>
+            </td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td>Lorem</td>
+            <td>Tom Hanks</td>
+            <td>user@eulerproject.io</td>
+            <td>active</td>
+            <td class="euler-user-action-td">
+              <button type="button" class="btn btn-danger btn-user-action">Block</button>
+              <button type="button" class="btn btn-default btn-user-action">Edit</button>
+            </td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td>Lorem</td>
+            <td>Tom Hanks</td>
+            <td>user@eulerproject.io</td>
+            <td>active</td>
+            <td class="euler-user-action-td">
+              <button type="button" class="btn btn-danger btn-user-action">Block</button>
+              <button type="button" class="btn btn-default btn-user-action">Edit</button>
+            </td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td>Lorem</td>
+            <td>Tom Hanks</td>
+            <td>user@eulerproject.io</td>
+            <td>active</td>
+            <td class="euler-user-action-td">
+              <button type="button" class="btn btn-danger btn-user-action">Block</button>
+              <button type="button" class="btn btn-default btn-user-action">Edit</button>
+            </td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td>Lorem</td>
+            <td>Tom Hanks</td>
+            <td>user@eulerproject.io</td>
+            <td>blocked</td>
+            <td class="euler-user-action-td">
+              <button type="button" class="btn btn-danger btn-user-action" disabled="disabled">Block</button>
+              <button type="button" class="btn btn-default btn-user-action">Edit</button>
+            </td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td>Lorem</td>
+            <td>Tom Hanks</td>
+            <td>user@eulerproject.io</td>
+            <td>active</td>
+            <td class="euler-user-action-td">
+              <button type="button" class="btn btn-danger btn-user-action">Block</button>
+              <button type="button" class="btn btn-default btn-user-action">Edit</button>
+            </td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td>Lorem</td>
+            <td>Tom Hanks</td>
+            <td>user@eulerproject.io</td>
+            <td>active</td>
+            <td class="euler-user-action-td">
+              <button type="button" class="btn btn-danger btn-user-action">Block</button>
+              <button type="button" class="btn btn-default btn-user-action">Edit</button>
+            </td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td>Lorem</td>
+            <td>Tom Hanks</td>
+            <td>user@eulerproject.io</td>
+            <td>blocked</td>
+            <td class="euler-user-action-td">
+              <button type="button" class="btn btn-danger btn-user-action" disabled="disabled">Block</button>
+              <button type="button" class="btn btn-default btn-user-action">Edit</button>
+            </td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td>Lorem</td>
+            <td>Tom Hanks</td>
+            <td>user@eulerproject.io</td>
+            <td>active</td>
+            <td class="euler-user-action-td">
+              <button type="button" class="btn btn-danger btn-user-action">Block</button>
+              <button type="button" class="btn btn-default btn-user-action">Edit</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <nav class="euler-btn-group-page">
+          <ul class="pagination">
+            <li><a href="#">&laquo;</a></li>
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">&raquo;</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <footer>
+        <hr>
+        <div id="footer-copyright">&copy;2016&nbsp;Euler Project&nbsp;<a id="icp" href="http://www.miitbeian.gov.cn" target="_Blank">粤ICP备15054669号</a></div>
+      </footer>
+
+    </div>
+  </div>
+</div>
+
+<script src="resources/js/lib/jquery-1.12.4.min.js"></script>
+<script src="resources/js/lib/bootstrap.min.js"></script>
+<script src="resources/js/lib/holder.min.js"></script>
+
+<script>
+
+  $(function() {
+    signout();
+  });
+
+  function signin() {
+    //return;
+    $(".euler-display-signed").removeClass("euler-hidden");
+    $(".euler-display-unsigned").addClass("euler-hidden");
+  }
+
+  function signout() {
+    $(".euler-display-signed").addClass("euler-hidden");
+    $(".euler-display-unsigned").removeClass("euler-hidden");
+  }
+
+  function onSearch(callForm) {
+    console.log($(callForm).serialize());
+  }
+</script>
+</body>
+</html>
