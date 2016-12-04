@@ -99,16 +99,15 @@
           </form>
         </div>
       </div>
-
-      <div class="table-responsive">
+      <div id="user-table" class="table-responsive euler-table-holder" data-option="action:'actions/loadData.json'">
         <table class="table table-striped euler-table">
           <thead>
           <tr>
-            <th class="euler-dashboard-user-ck-th"><input type="checkbox"></th>
-            <th class="euler-dashboard-user-username-th">Username</th>
-            <th class="euler-dashboard-user-name-th">Name</th>
-            <th class="euler-dashboard-user-email-th">Email</th>
-            <th class="euler-dashboard-user-status-th">Status</th>
+            <th class="euler-dashboard-user-ck-th" data-field="id"><input type="checkbox"></th>
+            <th class="euler-dashboard-user-username-th" data-field="username">Username</th>
+            <th class="euler-dashboard-user-name-th" data-field="empName">Name</th>
+            <th class="euler-dashboard-user-email-th" data-field="email">Email</th>
+            <th class="euler-dashboard-user-status-th" data-field="enabled">Status</th>
             <th class="euler-dashboard-user-action-th"></th>
           </tr>
           </thead>
@@ -227,13 +226,7 @@
         </table>
         <nav class="euler-btn-group-page">
           <ul class="pagination">
-            <li><a href="#">&laquo;</a></li>
-            <li class="active"><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li><a href="#">&raquo;</a></li>
+            <li class="page-1 active"><a href="#">1</a></li>
           </ul>
         </nav>
       </div>
@@ -250,6 +243,7 @@
 <script src="resources/js/lib/jquery-1.12.4.min.js"></script>
 <script src="resources/js/lib/bootstrap.min.js"></script>
 <script src="resources/js/lib/holder.min.js"></script>
+<script src="resources/js/lib/euler-ui.js"></script>
 
 <script>
 
@@ -269,7 +263,7 @@
   }
 
   function onSearch(callForm) {
-    console.log($(callForm).serialize());
+    loadData($('#user-table'), $(callForm).serializeJson());
   }
 </script>
 </body>
