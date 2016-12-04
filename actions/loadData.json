@@ -14,21 +14,21 @@
       "empName": "Jack Lee",
       "enabled": true,
       "email": "jack@eulerproject.io",
-      "accountNonLocked": true
+      "accountNonLocked": false
     },
     {
       "id": "c05cd414-3bb9-47a5-8aff-1f0b70c3579d",
       "username": "rose",
       "empName": "Rose Lain",
-      "enabled": true,
+      "enabled": false,
       "email": "rose@eulerproject.io",
-      "accountNonLocked": true
+      "accountNonLocked": false
     },
     {
       "id": "9d63af5e-94a4-44a0-8d6f-c2afd7c1b78d",
       "username": "james",
       "empName": "James Lee",
-      "enabled": true,
+      "enabled": false,
       "email": "james@eulerproject.io",
       "accountNonLocked": true
     },
@@ -76,7 +76,7 @@
       "id": "008ccb16-877c-4078-9c97-b62a75224112",
       "username": "nana",
       "empName": "Nana",
-      "enabled": true,
+      "enabled": false,
       "email": "nana@eulerproject.io",
       "accountNonLocked": true
     }

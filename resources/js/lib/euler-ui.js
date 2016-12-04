@@ -57,28 +57,32 @@ function loadData(table, queryData) {
                 var row = data.rows[i];
                 html += '<tr>';
                 ths.each(function () {
+                    var field = $(this).data('field');
+                    var value
+                    if(typeof(field) != 'undefined') {
+                        value = row[field];
+                    }
+                    var formatter = $(this).data('formatter');
+                    if(typeof(formatter) != 'undefined') {
+                        value = eval(formatter).call(formatter, value, row, i);
+                    }
+
                     if($(this).hasClass('euler-dashboard-user-ck-th')) {
-                        var field = $(this).data('field')
-                        var value = row[field];
                         if(typeof(value) == 'undefined')
                             value = '';
                         html += '<td><input type="checkbox" value="'+value+'"></td>';
                     } else if($(this).hasClass('euler-dashboard-user-action-th')) {
-                        html += '<td class="euler-user-action-td">'
-                            +'<button type="button" class="btn btn-danger btn-user-action">Block</button>\n'
-                            +'<button type="button" class="btn btn-default btn-user-action">Edit</button>'
+                        html += '<td class="euler-user-action-td">';
+                        if(row.enabled == true)
+                            html +='<button type="button" class="btn btn-danger btn-user-action">Block</button>\n';
+                        else
+                            html +='<button type="button" class="btn btn-danger btn-user-action" disabled="disabled">Block</button>\n';
+                        html +='<button type="button" class="btn btn-default btn-user-action">Edit</button>'
                             +'</td>';
                     } else {
-
-                        var field = $(this).data('field');
-                        if (typeof(field) == 'undefined') {
-                            html += '<td></td>';
-                        } else {
-                            var value = row[field];
-                            if(typeof(value) == 'undefined')
-                                value = '-';
-                            html += '<td>' + value + '</td>';
-                        }
+                        if(typeof(value) == 'undefined')
+                            value = '-';
+                        html += '<td>' + value + '</td>';
                     }
 
                 })
@@ -150,4 +154,11 @@ function clickPage(data) {
     $(data).parent().parent().children('.active').removeClass('active');
     $(data).parent().addClass('active');
     loadData($(data).parent().parent().parent().parent());
+}
+
+function activeFormatter(value,row,index){
+    console.log(value)
+    console.log(row)
+    console.log(index)
+    return value == true ? 'active': 'blocked';
 }
