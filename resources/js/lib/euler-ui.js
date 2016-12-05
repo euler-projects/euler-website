@@ -80,7 +80,9 @@ function loadData(table, queryData) {
             for(var i in data.rows) {
                 var row = data.rows[i];
                 html += '<tr>';
+                html += '<input type="hidden" value="'+i+'">';
                 ths.each(function () {
+
                     var field = $(this).data('field');
                     var value;
                     if(typeof(field) != 'undefined') {
@@ -90,11 +92,21 @@ function loadData(table, queryData) {
                     if(typeof(formatter) != 'undefined') {
                         value = eval(formatter).call(formatter, value, row, i);
                     }
+                    if(typeof(value) == 'undefined')
+                        value = '';
 
-                    if($(this).hasClass('euler-dashboard-user-ck-th')) {
-                        if(typeof(value) == 'undefined')
-                            value = '';
-                        html += '<td><input type="checkbox" value="'+value+'"></td>';
+                    var optionTh = getOption($(this).data('option'));
+
+                    if(optionTh.checkbox == 'true') {
+                        var keyField = optionTh.checkboxKey;
+                        var key;
+                        if(typeof(keyField) != 'undefined') {
+                            key = row[keyField];
+                        }
+                        if(typeof(key) == 'undefined')
+                            key = '';
+
+                        html += '<td><input type="checkbox" value="'+key+'"> ' + value + '</td>';
                     } else if($(this).hasClass('euler-dashboard-user-action-th')) {
                         html += '<td class="euler-user-action-td">';
                         if(row.enabled == true)
@@ -128,7 +140,10 @@ function loadData(table, queryData) {
 }
 
 function getOption(str) {
-    var untiArray = str.split(',');
+    if(typeof(str) == 'undefined')
+        return {};
+
+    var untiArray = str.replace(/[\s]/g, '').split(',');
 
     var result = {};
     for(var i in untiArray) {
