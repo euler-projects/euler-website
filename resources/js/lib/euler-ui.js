@@ -19,28 +19,52 @@ $.fn.serializeJson=function(){
 };
 
 $(function(){
-    var eulerTables = $('.euler-table-holder');
+    var eulerTables = $('.euler-table');
     eulerTables.each(function () {
+        initEulerTable(this);
         loadData(this);
     })
 });
 
+function initEulerTable(table) {
+    var tbody = '<tbody></tbody>'
+    $(table).append(tbody);
+
+    var option = getOption($(table).data('option'));
+
+    var toolbar = option.toolbar;
+    console.log(toolbar);
+    $(toolbar).insertBefore(table);
+
+    if(option.pagination == 'true') {
+        var pageBtnhtml = '<nav class="euler-table-page-btn">'
+            + '<ul class="pagination">'
+            + '</ul>'
+            + '</nav>';
+        $(pageBtnhtml).insertAfter(table);
+    }
+}
+
 function loadData(table, queryData) {
     var option = getOption($(table).data('option'));
 
-    var pageBtn = $(table).children('.euler-btn-group-page').children('ul');
-    var currPage = $(pageBtn).children('.active').children('a').html();
-    if(typeof(currPage) == 'undefined') {
-        currPage = 1;
-    }
     var action = option.action;
 
     var data = {};
     if(typeof(queryData) != 'undefined') {
         data = queryData;
     }
-    data.pageIndex = currPage;
-    data.pageSize = 10;
+
+    if(option.pagination == 'true') {
+        var pageBtn = $(table).next('.euler-table-page-btn').children('ul');
+        var currPage = $(pageBtn).children('.active').children('a').html();
+        if(typeof(currPage) == 'undefined') {
+            currPage = 1;
+        }
+        data.pageIndex = currPage;
+        data.pageSize = 10;
+    }
+
     data._r = new Date().getTime();
 
     $.ajax({
@@ -58,7 +82,7 @@ function loadData(table, queryData) {
                 html += '<tr>';
                 ths.each(function () {
                     var field = $(this).data('field');
-                    var value
+                    var value;
                     if(typeof(field) != 'undefined') {
                         value = row[field];
                     }
@@ -85,18 +109,20 @@ function loadData(table, queryData) {
                         html += '<td>' + value + '</td>';
                     }
 
-                })
+                });
                 html += '</tr>'
             }
             $(table).find('tbody').html(html);
 
-            var pageIndex = data.pageIndex;
-            var pageSize = data.pageSize;
-            var total = data.total;
-            var pages = parseInt(total / pageSize);
-            if(total % pageSize > 0) pages++;
+            if(option.pagination == 'true') {
+                var pageIndex = data.pageIndex;
+                var pageSize = data.pageSize;
+                var total = data.total;
+                var pages = parseInt(total / pageSize);
+                if (total % pageSize > 0) pages++;
 
-            wrapPageBtn(pageBtn, pageIndex, pages);
+                wrapPageBtn(pageBtn, pageIndex, pages);
+            }
         }
     });
 }
@@ -157,8 +183,5 @@ function clickPage(data) {
 }
 
 function activeFormatter(value,row,index){
-    console.log(value)
-    console.log(row)
-    console.log(index)
     return value == true ? 'active': 'blocked';
 }

@@ -33,6 +33,7 @@ ul {
     outline: medium !important;
 }
 
+
 .euler-table td {
     vertical-align: middle !important;
 }
@@ -42,6 +43,6 @@ ul {
     float: right;
 }
 
-.euler-btn-group-page{
+.euler-table-page-btn {
     text-align: center;
  }
