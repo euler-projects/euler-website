@@ -24,13 +24,8 @@
 .euler-dashboard-user-action-th {
     width: 160px;
     min-width: 160px;
-
 }
 
-.euler-user-action-td {
-    text-align: right;
-}
-
-.euler-user-action-td .btn {
-    width: 66px;
+.btn-user-action {
+    width:66px;
 }

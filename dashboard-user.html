@@ -84,7 +84,7 @@
       <h1 class="page-header">Users</h1>
 
       <div class="table-responsive">
-        <table id="user-table" class="table table-striped euler-table" data-option="action:'actions/loadData.json',pagination:true,toolbar:#bar">
+        <table id="user-table" class="table table-striped euler-table" data-option="action:'actions/loadData.json',pagination:true,pageSize:10,toolbar:#bar">
           <thead>
           <tr>
             <th class="euler-dashboard-user-ck-th" data-option="checkbox:true,checkboxKey:'id'"><input type="checkbox"></th>
@@ -92,7 +92,7 @@
             <th class="euler-dashboard-user-name-th" data-field="empName">Name</th>
             <th class="euler-dashboard-user-email-th" data-field="email">Email</th>
             <th class="euler-dashboard-user-status-th" data-field="enabled" data-formatter="activeFormatter">Status</th>
-            <th class="euler-dashboard-user-action-th" data-formatter1="activeFormatter1"></th>
+            <th class="euler-dashboard-user-action-th" data-formatter="userActionBtnFormatter"></th>
           </tr>
           </thead>
         </table>
@@ -131,9 +131,12 @@
 
 <script>
 
-  $(function() {
     signout();
-  });
+
+    var eulerTable = $('#user-table').eulertable();
+    eulerTable.init();
+    eulerTable.refreshData();
+
 
   function signin() {
     //return;
@@ -147,7 +150,19 @@
   }
 
   function onSearch(callForm) {
-    loadData($('#user-table'), $(callForm).serializeJson());
+    eulerTable.refreshData($(callForm).serializeJson());
+    console.log(eulerTable.getData());
+    console.log(eulerTable.getOption());
+  }
+
+    function prePage() {
+      eulerTable.prePage();
+    }
+    function goPage(pageIndex) {
+      eulerTable.goPage(pageIndex);
+    }
+  function nextPage() {
+      eulerTable.nextPage();
   }
 </script>
 </body>
