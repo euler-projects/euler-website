@@ -167,6 +167,7 @@ $.fn.eulertable = function (optionObj) {
 
         var toolbar = option.toolbar;
         $(toolbar).insertBefore(table);
+        $(toolbar).addClass("euler-table-toolbar")
 
         if(option.pagination == 'true') {
             var pageBtnhtml = '<nav class="euler-table-page-btn">'

@@ -11,7 +11,7 @@
 
   <link rel="icon" href="favicon.ico">
 
-  <title>Dashboard [Users]</title>
+  <title>Users · Dashboard</title>
 
   <link rel="stylesheet" href="resources/css/lib/bootstrap.min.css">
   <link rel="stylesheet" href="resources/css/custom/non-responsive.css">
@@ -60,8 +60,7 @@
 </nav>
 
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-3 col-md-2 col-xs-3 sidebar">
+    <div class="sidebar">
       <ul class="nav nav-sidebar">
         <li class="active"><a href="#">Users</a></li>
         <li><a href="#">Privileges</a></li>
@@ -80,7 +79,7 @@
         <li><a href="">Another nav item</a></li>
       </ul>
     </div>
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-xs-9 col-xs-offset-3 main">
+    <div class="main">
       <h1 class="page-header">Users</h1>
 
       <div class="table-responsive">
@@ -104,23 +103,25 @@
       </footer>
 
     </div>
-  </div>
 </div>
 
-<div id="bar" class="row euler-dashboard-controller">
-  <div class="col-xs-6">
-    <button type="button" class="btn btn-success">Create User</button>
-    <button type="button" class="btn btn-danger">Block User</button>
-  </div>
-  <div class="col-xs-6">
-    <form action="javascript:void(0)" onsubmit="onSearch(this)">
-            <span class="input-group euler-table-signal-search-box">
-                <input type="text" class="form-control" name="key">
-                <span class="input-group-btn">
-                  <button type="submit" class="btn btn-default" type="button">Search</button>
+
+<div id="bar" class="container-fluid">
+  <div class="row euler-dashboard-controller">
+    <div class="col-xs-6">
+      <button type="button" class="btn btn-success">Create User</button>
+      <button type="button" class="btn btn-danger">Block User</button>
+    </div>
+    <div class="col-xs-6">
+      <form action="javascript:void(0)" onsubmit="onSearch(this)">
+              <span class="input-group euler-table-signal-search-box">
+                  <input type="text" class="form-control" name="key">
+                  <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default" type="button">Search</button>
+                </span>
               </span>
-            </span>
-    </form>
+      </form>
+    </div>
   </div>
 </div>
 
