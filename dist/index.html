@@ -32,57 +32,9 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <div class="euler-userinfo euler-display-xs euler-hidden-sm euler-display-signed">
-        <div class="btn-group">
-          <button type="button" class="dropdown-toggle euler-btn-xs-user-menu" data-toggle="dropdown">
-            <img class="euler-userinfo-user-icon" src="resources/images/tx.jpg">
-          </button>
-          <ul class="dropdown-menu euler-userinfo-menu-xs" role="menu">
-          <li><a href="#">Profile</a></li>
-          <li class="divider"></li>
-          <li><a href="#">Setting</a></li>
-          <li class="divider"></li>
-          <li><a href="javascript:void(0)" onclick="signout()">Sign out</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="euler-userinfo euler-display-xs euler-hidden-sm euler-display-unsigned">
-        <div class="btn-group">
-          <button type="button" class="dropdown-toggle euler-btn-xs-sign" data-toggle="dropdown">
-        <span class="glyphicon glyphicon-user"></span>
-        </button>
-        <ul class="dropdown-menu euler-userinfo-menu-xs" role="menu">
-          <li><a href="javascript:void(0)" onclick="signin()">Sign in</a></li>
-          <li class="divider"></li>
-          <li><a href="#">Sign up</a></li>
-        </ul>
-        </div>
-      </div>
       <a id="brand" class="navbar-brand" href="/">
         <span class="eulerproject-160-40-fff"></span>
       </a>
-    </div>
-    <div class="euler-userinfo euler-display-sm euler-hidden-xs euler-display-signed">
-      <div class="btn-group ">
-        <button type="button" class="dropdown-toggle euler-btn-user-menu" data-toggle="dropdown">
-          <span class="euler-btn-user-menu-name">cFrost</span> <span class="caret euler-btn-user-menu-caret"></span>
-        </button>
-        <ul class="dropdown-menu euler-userinfo-menu" role="menu">
-          <li><a href="#">Profile</a></li>
-          <li><a href="#">Setting</a></li>
-          <li class="divider"></li>
-          <li><a href="javascript:void(0)" onclick="signout()">Sign out</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="euler-userinfo euler-display-sm euler-hidden-xs euler-display-unsigned">
-      <div class="euler-btn-group euler-btn-sign-group">
-          <span>
-            <button type="button" class="btn btn-success euler-btn-sign" onclick="signin()">Sign in</button>
-          </span><span>
-            <button type="button" class="btn btn-default euler-btn-sign">Sign up</button>
-          </span>
-      </div>
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
@@ -159,21 +111,6 @@
 <script src="resources/js/lib/bootstrap.min.js"></script>
 
 <script>
-
-  $(function() {
-    signout();
-  });
-
-  function signin() {
-    //return;
-    $(".euler-display-signed").removeClass("euler-hidden");
-    $(".euler-display-unsigned").addClass("euler-hidden");
-  }
-
-  function signout() {
-    $(".euler-display-signed").addClass("euler-hidden");
-    $(".euler-display-unsigned").removeClass("euler-hidden");
-  }
 </script>
 </body>
 </html>

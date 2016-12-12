@@ -1,0 +1,53 @@
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+body,
+a,
+a:hover,
+a:visited {
+    color: #333;
+}
+
+footer,
+footer * > a,
+footer * > a:hover,
+footer * > a:visited {
+    color: #666;
+}
+
+ul {
+    -webkit-padding-start: 20px;
+}
+
+.euler-hidden {
+    display:none !important;
+}
+
+.euler-btn-group > span {
+    display:inline-block;
+    width:50%;
+    text-align: center;
+}
+
+.btn:focus {
+    outline: medium !important;
+}
+
+.euler-table-toolbar {
+
+}
+
+.euler-table td {
+    vertical-align: middle !important;
+}
+
+.euler-table-signal-search-box {
+    max-width: 300px;
+    float: right;
+}
+
+.euler-table-page-btn {
+    text-align: center;
+ }

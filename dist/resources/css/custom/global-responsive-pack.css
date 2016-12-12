@@ -1,0 +1,23 @@
+@media screen and (min-width: 768px) {
+    .euler-display-sm {
+        display: inline-block !important;
+    }
+
+    .euler-hidden-sm {
+        display: none !important;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .euler-display-xs {
+        display: inline-block !important;
+    }
+
+    .euler-hidden-xs {
+        display: none !important;
+    }
+}
+
+.euler-hidden {
+    display:none !important;
+}

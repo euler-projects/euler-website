@@ -1,0 +1,9 @@
+.navbar-brand {
+    padding: 10px 10px;
+    font-size: 18px;
+    line-height: 30px;
+}
+
+.navbar-toggle {
+    margin-left: 6px;
+}
