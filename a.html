@@ -1,0 +1,866 @@
+
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link rel="stylesheet" href="/design/assets/lib/easyui/themes/bootstrap/easyui.css">
+    <link rel="stylesheet" href="/design/assets/lib/easyui/themes/icon.css">
+    <link rel="stylesheet" href="/design/assets/css/admin/themes/default/demo/global.css">
+    <link rel="stylesheet" href="/design/assets/css/admin/themes/default/demo/dash.css">
+    <link rel="stylesheet" href="/design/assets/lib/font-awesome-4.7.0/css/font-awesome.min.css">
+    <style>
+        #e-dg-zone {
+            height: 200px;
+        }
+    </style>
+
+    <title></title>
+
+</head>
+
+<body class="easyui-layout">
+<div id="e-dg-zone" data-options="region:'north',split:true" style="background:#eee;">
+    <div id="e-dg-tb">
+        <div class="btns">
+            <a href="javascript:void(0)" class="easyui-linkbutton" plain="true" onclick="onSearch()"><i class="fa fa-refresh"></i>刷新</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" plain="true" onclick="onAdd()"><i class="fa fa-plus"></i>新增</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" plain="true" onclick="onDelete()"><i class="fa fa-remove"></i>删除</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" plain="true" onclick="startRound()"><i class="fa fa-play"></i>开始评审</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" plain="true" onclick="stopRound()"><i class="fa fa-stop"></i>结束评审</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" plain="true" onclick="openRoundConfirmDlg()"><i class="fa fa-check-square-o"></i>确认获奖作品</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" plain="true" onclick="unConfirmRound()"><i class="fa fa-ban"></i>取消确认</a>
+        </div>
+    </div>
+    <table id="e-dg" class="easyui-datagrid"
+           data-options="
+            fit:true,
+            url:'findRoundInOrder_ajax',
+            toolbar:'#e-dg-tb',
+            fitColumns:false,
+            rownumbers:true,
+            remoteSort:false,
+            pagination:false,
+            singleSelect:true,
+            onClickRow:onEdit">
+        <thead>
+        <tr>
+            <th data-options="field:'id',hidden:true">ID</th>
+            <th data-options="field:'roundNum',align:'center'">评审轮次</th>
+            <th data-options="field:'name',align:'center'">轮次名称</th>
+            <th data-options="field:'beginDate',align:'center',formatter:unixDatetimeFormatter">开始时间</th>
+            <th data-options="field:'endDate',align:'center',formatter:unixDatetimeFormatter">结束时间</th>
+            <th data-options="field:'total',align:'center'">参评作品数</th>
+            <th data-options="field:'quota',align:'center'">入围名额</th>
+            <th data-options="field:'votesPerJudge',align:'center'">每位评委票数</th>
+            <th data-options="field:'showScore',align:'center',formatter:yesOrNoFormatter">票数对评委可见</th>
+            <th data-options="field:'showAuthor',align:'center',formatter:yesOrNoFormatter">作者对评委可见</th>
+            <th data-options="field:'status',align:'center',formatter:roundStatusFormatter">状态</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+<div id="e-ds-zone" data-options="region:'center'">
+    <p style="padding-left:20px;">新增或选择轮次以操作</p>
+    <div id="e-ds-dlg-add-round" class="easyui-dialog e-ds-dlg" title="新建评审轮次"
+         data-options="
+            closed:true,
+            closable:true,
+            draggable:false,
+            resizable:false,
+            modal:false,
+            inline:true,
+            border:false,
+            onClose:onAddRoundDlgClose,
+            maximized:true">
+        <form id="e-ds-dlg-add-round-fm" method="post">
+            <div class="e-ds-dlg-line">
+                <input class="easyui-textbox e-ds-dlg-input" name="name"
+                       data-options="required:true,label:'轮次名称',labelAlign:'right',labelWidth:'100px'">
+            </div>
+            <div class="e-ds-dlg-line">
+                <input class="easyui-datetimebox e-ds-dlg-input" name="beginDate"
+                       data-options="required:true,label:'开始时间',labelAlign:'right',labelWidth:'100px'">
+            </div>
+            <div class="e-ds-dlg-line">
+                <input class="easyui-datetimebox e-ds-dlg-input" name="endDate"
+                       data-options="required:true,label:'结束时间',labelAlign:'right',labelWidth:'100px'">
+            </div>
+            <div class="e-ds-dlg-line">
+                <input class="easyui-textbox e-ds-dlg-input" name="total"
+                       data-options="required:true,label:'参评作品数',labelAlign:'right',labelWidth:'100px'">
+            </div>
+            <div class="e-ds-dlg-line">
+                <input class="easyui-textbox e-ds-dlg-input" name="quota"
+                       data-options="required:true,label:'入围名额',labelAlign:'right',labelWidth:'100px'">
+            </div>
+            <div class="e-ds-dlg-line">
+                <input class="easyui-textbox e-ds-dlg-input" name="votesPerJudge"
+                       data-options="required:true,label:'每位评委票数',labelAlign:'right',labelWidth:'100px'">
+            </div>
+            <div class="e-ds-dlg-line">
+                <select class="easyui-combobox e-ds-dlg-input" name="showScore" id="e-ds-dlg-add-round-fm_showScore"
+                        data-options="
+                    required:true,
+                    label:'票数对评委可见',
+                    labelWidth:'100px',
+                    labelAlign:'right',
+                    panelHeight:'auto',
+                    panelMaxHeight:'200px',
+                    editable:false">
+                    <option value="true">是</option>
+                    <option value="false">否</option>
+                </select>
+            </div>
+            <div class="e-ds-dlg-line">
+                <select class="easyui-combobox e-ds-dlg-input" name="showAuthor" id="e-ds-dlg-add-round-fm_showAuthor"
+                        data-options="
+                    required:true,
+                    label:'作者对评委可见',
+                    labelWidth:'100px',
+                    labelAlign:'right',
+                    panelHeight:'auto',
+                    panelMaxHeight:'200px',
+                    editable:false">
+                    <option value="true">是</option>
+                    <option value="false">否</option>
+                </select>
+            </div>
+        </form>
+        <div class="e-ds-dlg-btns" data-dlg="#e-ds-dlg-add-round">
+            <a href="javascript:void(0)" class="easyui-linkbutton e-ds-dlg-btn" onclick="createRound()"><i class="fa fa-check"></i>保存</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton e-ds-dlg-btn" onclick="$('#e-ds-dlg-add-round').dialog('close')"><i class="fa fa-close"></i>取消</a>
+        </div>
+    </div>
+
+
+    <div id="e-ds-dlg-dashboard" class="easyui-dialog e-ds-dlg" style="" title="Dashboard"
+         data-options="
+            closed:true,
+            closable:true,
+            draggable:false,
+            resizable:false,
+            modal:false,
+            inline:true,
+            border:false,
+            maximized:true,
+            onClose:onEditRoundDlgClose">
+        <input type="hidden" id="e-ds-dashInputId">
+        <div id="e-ds-dlg-dashboard-tabs" class="easyui-tabs e-ds-dlg-tabs"
+             data-options="fit:true,pill:true">
+            <div title="轮次信息" class="e-ds-dlg-tab easyui-layout">
+                <div id="e-ds-dlg-edit-round" class="easyui-dialog e-ds-dlg"
+                     data-options="
+                    closed:false,
+                    noheader:true,
+                    closable:true,
+                    draggable:false,
+                    resizable:false,
+                    modal:false,
+                    inline:true,
+                    border:false,
+                    maximized:true">
+                    <form id="e-ds-dlg-edit-round-fm" method="post">
+                        <input type="hidden" name="id" id="e-ds-dlg-edit-round-fm_id">
+                        <div class="e-ds-dlg-line">
+                            <input class="easyui-textbox e-ds-dlg-input" name="name"
+                                   data-options="required:true,label:'轮次名称',labelAlign:'right',labelWidth:'100px'">
+                        </div>
+                        <div class="e-ds-dlg-line">
+                            <input class="easyui-datetimebox e-ds-dlg-input" name="beginDateStr" id="e-ds-dlg-edit-round-fm_beginDate"
+                                   data-options="required:true,label:'开始时间',labelAlign:'right',labelWidth:'100px'">
+                        </div>
+                        <div class="e-ds-dlg-line">
+                            <input class="easyui-datetimebox e-ds-dlg-input" name="endDateStr" id="e-ds-dlg-edit-round-fm_endDate"
+                                   data-options="required:true,label:'结束时间',labelAlign:'right',labelWidth:'100px'">
+                        </div>
+                        <div class="e-ds-dlg-line">
+                            <input class="easyui-textbox e-ds-dlg-input" name="total"
+                                   data-options="required:true,label:'参评作品数',labelAlign:'right',labelWidth:'100px'">
+                        </div>
+                        <div class="e-ds-dlg-line">
+                            <input class="easyui-textbox e-ds-dlg-input" name="quota"
+                                   data-options="required:true,label:'入围名额',labelAlign:'right',labelWidth:'100px'">
+                        </div>
+                        <div class="e-ds-dlg-line">
+                            <input class="easyui-textbox e-ds-dlg-input" name="votesPerJudge"
+                                   data-options="required:true,label:'每位评委票数',labelAlign:'right',labelWidth:'100px'">
+                        </div>
+                        <div class="e-ds-dlg-line">
+                            <select class="easyui-combobox e-ds-dlg-input" name="showScore" id="e-ds-dlg-edit-round-fm_showScore"
+                                    data-options="
+                            required:true,
+                            label:'票数对评委可见',
+                            labelWidth:'100px',
+                            labelAlign:'right',
+                            panelHeight:'auto',
+                            panelMaxHeight:'200px',
+                            editable:false">
+                                <option value="true">是</option>
+                                <option value="false">否</option>
+                            </select>
+                        </div>
+                        <div class="e-ds-dlg-line">
+                            <select class="easyui-combobox e-ds-dlg-input" name="showAuthor" id="e-ds-dlg-edit-round-fm_showAuthor"
+                                    data-options="
+                            required:true,
+                            label:'作者对评委可见',
+                            labelWidth:'100px',
+                            labelAlign:'right',
+                            panelHeight:'auto',
+                            panelMaxHeight:'200px',
+                            editable:false">
+                                <option value="true">是</option>
+                                <option value="false">否</option>
+                            </select>
+                        </div>
+                    </form>
+                    <div class="e-ds-dlg-btns" data-dlg="#e-ds-dlg-edit-round">
+                        <a href="javascript:void(0)" class="easyui-linkbutton e-ds-dlg-btn" onclick="updateRound()"><i class="fa fa-check"></i>保存</a>
+                    </div>
+                </div>
+            </div>
+            <div title="作品管理" class="e-ds-dlg-tab easyui-layout">
+                <div id="e-ds-dlg-dashboard-works-dg-tb">
+                    <div class="btns">
+                        <a href="javascript:void(0)" class="easyui-linkbutton" plain="true" onclick="openWorkSearchDlg('')"><i class="fa fa-plus"></i>从所有作品中选择</a>
+                        <a href="javascript:void(0)" class="easyui-linkbutton" plain="true" onclick="openWorkSearchDlg('preRound')"><i class="fa fa-plus"></i>从上轮获胜作品中选择</a>
+                        <a href="javascript:void(0)" class="easyui-linkbutton" plain="true" onclick="onDeleteWork()"><i class="fa fa-remove"></i>删除</a>
+                        <input id="only-show-win" type="checkbox"> <label for="only-show-win">仅显示入围作品</label>
+                    </div>
+                </div>
+                <table id="e-ds-dlg-dashboard-works-dg" class="easyui-datagrid"
+                       data-options="
+                    fit:true,
+                    url:'findWorkByPageWithScore_ajax',
+                    toolbar:'#e-ds-dlg-dashboard-works-dg-tb',
+                    fitColumns:false,
+                    rownumbers:true,
+                    remoteSort:false,
+                    pagination:true,
+                    singleSelect:false">
+                    <thead>
+                    <tr>
+                        <th data-options="field:'ck',checkbox:true">ID</th>
+                        <th data-options="field:'id',hidden:true">ID</th>
+                        <th data-options="field:'viewId',align:'center'">作品ID</th>
+                        <th data-options="field:'name',align:'center'">作品名称</th>
+                        <th data-options="field:'createByName',align:'center'">作者</th>
+                        <th data-options="field:'classification',align:'center'">作品类型</th>
+                        <th data-options="field:'expressRequired',align:'center',formatter:yesOrNoFormatter">有可寄实物</th>
+                        <th data-options="field:'waybillNo',align:'center'">快递单号</th>
+                        <th data-options="field:'introduction',align:'center',width:'400px'">作品简介</th>
+                        <th data-options="field:'createDate',align:'center',formatter:unixDatetimeFormatter">提交时间</th>
+                        <th data-options="field:'score',align:'center'">得票数</th>
+                        <th data-options="field:'won',align:'center',formatter:yesOrNoFormatter">确认入围</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+            <div title="评委管理" class="e-ds-dlg-tab easyui-layout">
+                <div id="e-ds-dlg-dashboard-raters-dg-tb">
+                    <div class="btns">
+                        <a href="javascript:void(0)" class="easyui-linkbutton" plain="true" onclick="openRaterSearchDlg()"><i class="fa fa-plus"></i>新增</a>
+                        <a href="javascript:void(0)" class="easyui-linkbutton" plain="true" onclick="onDeleteRater()"><i class="fa fa-remove"></i>删除</a>
+                    </div>
+                </div>
+                <table id="e-ds-dlg-dashboard-raters-dg" class="easyui-datagrid"
+                       data-options="
+                    fit:true,
+                    url:'findUsersByPageX_ajax',
+                    toolbar:'#e-ds-dlg-dashboard-raters-dg-tb',
+                    fitColumns:false,
+                    rownumbers:true,
+                    remoteSort:false,
+                    pagination:true,
+                    singleSelect:false">
+                    <thead>
+                    <tr>
+                        <th data-options="field:'ck',checkbox:true">ID</th>
+                        <th data-options="field:'id',hidden:true">ID</th>
+                        <th data-options="field:'username',align:'center'">用户名</th>
+                        <th data-options="field:'email',align:'center'">邮箱</th>
+                        <th data-options="field:'mobile',align:'center'">手机号</th>
+                        <th data-options="field:'fullName',align:'center'">姓名</th>
+                        <th data-options="field:'customText',align:'center'">已投票数</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/design/assets/lib/jquery/jquery-1.12.4.min.js"></script>
+<script src="/design/assets/lib/easyui/jquery.easyui.min.js"></script>
+<script src="/design/assets/lib/easyui/easyui-lang-zh_CN.js"></script><div id="fm-submit-mask" class="window-mask">
+    <div class="mask-wrap" >
+        <img class="loading-img" src="/design/assets/lib/easyui/themes/bootstrap/images/loading.gif">
+    </div>
+</div>
+
+<script src="/design/assets/lib/euler/js/dict.js"></script>
+<script src="/design/assets/lib/euler/js/util.js"></script>
+<script src="/design/assets/lib/euler/js/for_easyui/util.js"></script>
+<script src="/design/assets/lib/euler/js/for_easyui/formatter.js"></script>
+
+<div id="e-iframe-dlg" class="easyui-dialog" style="width:90%; max-width:800px; height:400px"
+     data-options="
+            closed:true,
+            iconCls:'icon-search',
+            resizable:false,
+            modal:true,
+            constrain:true,
+            onClose:onEulerIframeDlgClose,
+            buttons:'#e-iframe-dlg-btns'">
+    <iframe id="e-iframe-dlg-content"
+            name="e-iframe-dlg-content"
+            width="100%" height="100%" frameborder="no" border="0" marginwidth="0" marginheight="0" allowtransparency="yes"></iframe>
+    <div id="e-iframe-dlg-btns">
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="onEulerIframeDlgConfirm()"><i class="fa fa-check"></i>确定</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="$('#e-iframe-dlg').dialog('close')"><i class="fa fa-close"></i>取消</a>
+    </div>
+</div>
+
+<script>
+
+    var eulerIframeDlgCallBackFunction;
+
+    function onEulerIframeDlgConfirm() {
+        window.frames['e-iframe-dlg-content'].onEulerIframeDlgConfirm(function (data){
+            eulerIframeDlgCallBackFunction(data);
+            $('#e-iframe-dlg-content').attr('src', '');
+            $('#e-iframe-dlg').dialog('close');
+        });
+    }
+
+    function onEulerIframeDlgClose() {
+
+    }
+
+</script>
+
+<script>
+
+    function imgFormatter(value, row, index) {
+        return '<img alt="No Image" style="margin-top:5px;" src="/design/upload/'+value+'"  width="200px">'
+    }
+
+
+    function yesOrNoFormatter(value, row, index){
+        if(typeof(value) == 'undefined')
+            return '-';
+        if(value == true) {
+            return "是";
+        } else {
+            return "否";
+        }
+    }
+
+    var euler = {
+        table: {
+            loadData: function(table, data) {
+                var td = $(table).find('.data-td');
+
+                for(var i=0;i<td.length;i++){
+                    var field = $(td[i]).data("field");
+
+                    if(typeof(field) == 'undefined' || field == '')
+                        continue;
+
+                    var r =data[field];
+                    var value = r;
+
+                    var formatter = $(td[i]).data("formatter");
+                    if(typeof(formatter) != 'undefined' && formatter != '') {
+                        var func = eval(formatter);
+                        r =func(r, data);
+                    }
+
+                    if($(td[i]).hasClass('editable')) {
+                        if(typeof(r) == 'undefined')
+                            r = '';
+                        $($(td[i]).children('.td-input')[0]).val(r);
+                    } else {
+                        if(typeof(r) == 'undefined')
+                            r = '-';
+                        td[i].innerHTML = r+'<input type="hidden" name="'+field+'" value="'+value+'">';
+                    }
+                }
+            }
+        },
+
+        msg: {
+            confirm: function(msg, callback) {
+                $.messager.confirm("提示", msg, callback);
+            },
+            alert: function(msg) {
+                $.messager.alert("提示", msg);
+            },
+            error: function(msg) {
+                $.messager.alert("错误", "<div style='color: #D8504D;font-size: 1.5em;margin-bottom: 5px;'>ERROR</div><div style='margin-bottom: 5px;'>" + msg + "</div>");
+            },
+            response: {
+                error: function(XMLHttpRequest) {
+                    var response = JSON.parse(XMLHttpRequest.responseText);
+                    var msg = "<div style='color: #D8504D;font-size: 1.5em;margin-bottom: 5px;'>ERROR</div><div style='margin-bottom: 5px;'>错误代码:&nbsp;" + response.error + ' (' + response.error_code + ')'  + "</div><div>错误信息:&nbsp;" + response.error_description + "</div>";
+                    $.messager.alert("错误", msg);
+                }
+            }
+        },
+
+        dialog: function(url, params, title, callback) {
+            eulerIframeDlgCallBackFunction = callback;
+            $('#e-iframe-dlg').dialog('open').dialog('setTitle', title);
+            $('#e-iframe-dlg-content').attr('src', url + '?' + params);
+        }
+    }
+
+</script><script>
+    function onAdd() {
+        clearAddRoundDlg();
+        $('#e-ds-dlg-dashboard').dialog('close');
+        $('#e-ds-dlg-add-round').dialog('open');
+    }
+
+    function onDelete() {
+        var row = $('#e-dg').datagrid('getSelections');
+
+        if(row == null || row.length < 1){
+            euler.msg.error("请选择要删除的轮次");
+        } else if(row){
+            euler.msg.confirm("确定删除选定轮次? 一旦删除则无法恢复。", function(r) {
+                if(r) {
+                    $.ajax({
+                        url:'deleteRound_ajax',
+                        type:'POST',
+                        async:true,
+                        data: {roundId: row[0].id},
+                        error:function(XMLHttpRequest, textStatus, errorThrown) {
+                            euler.msg.response.error(XMLHttpRequest);
+                        },
+                        success:function(data, textStatus) {
+                            onSearch();
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+    function onEdit() {
+        var row = $('#e-dg').datagrid('getSelections');
+        if(row == null || row.length < 1){
+            euler.msg.error("请选择数据项");
+        } else {
+            var id = getDashboardDataId();
+            if(row[0].id == id) {
+                console.log(row[0].id + '的编辑区已打开,忽略此次点击');
+                return;
+            }
+            $('#e-ds-dlg-add-round').dialog('close');
+            $('#e-ds-dlg-dashboard').dialog('close');
+            loadData(row[0].id);
+            setDashboardDataId(row[0].id);
+            $('#e-ds-dlg-dashboard').dialog('open');
+            $('#e-ds-dlg-dashboard .e-ds-dlg').dialog('open');
+        }
+    }
+
+    function clearAddRoundDlg() {
+        var showAuthor = $('#e-ds-dlg-add-round-fm_showAuthor').combobox('getValue');
+        var showScore = $('#e-ds-dlg-add-round-fm_showScore').combobox('getValue');
+        $('#e-ds-dlg-add-round-fm_showAuthor').combobox('unselect', showAuthor);
+        $('#e-ds-dlg-add-round-fm_showScore').combobox('unselect', showScore);
+        $('#e-ds-dlg-add-round-fm').form('clear');
+    }
+
+    function onAddRoundDlgClose() {
+        clearAddRoundDlg();
+        setDashboardDataId("");
+    }
+
+    function clearEditRoundDlg() {
+        $('#only-show-win')[0].checked = false;
+        var showAuthor = $('#e-ds-dlg-edit-round-fm_showAuthor').combobox('getValue');
+        var showScore = $('#e-ds-dlg-edit-round-fm_showScore').combobox('getValue');
+        $('#e-ds-dlg-edit-round-fm_showAuthor').combobox('unselect', showAuthor);
+        $('#e-ds-dlg-edit-round-fm_showScore').combobox('unselect', showScore);
+        $('#e-ds-dlg-edit-round-fm').form('clear');
+    }
+
+    function onEditRoundDlgClose() {
+        clearEditRoundDlg();
+        setDashboardDataId("");
+    }
+
+    function loadData(roundId) {
+        $.ajax({
+            url:'loadRound_ajax',
+            type:'POST',
+            async:true,
+            data: {roundId: roundId},
+            error:function(XMLHttpRequest, textStatus, errorThrown) {
+                euler.msg.response.error(XMLHttpRequest);
+            },
+            success:function(result, textStatus) {
+                clearEditRoundDlg();
+                $('#e-ds-dlg-edit-round-fm').form('load', result.data);
+                $('#e-ds-dlg-edit-round-fm_showAuthor').combobox('clear');
+                $('#e-ds-dlg-edit-round-fm_showScore').combobox('clear');
+                $('#e-ds-dlg-edit-round-fm_showAuthor').combobox('select',result.data.showAuthor+"");
+                $('#e-ds-dlg-edit-round-fm_showScore').combobox('select', result.data.showScore+"");
+                reloadRoundWorks();
+                reloadRoundRaters();
+            }
+        });
+    }
+
+    $('#only-show-win').on('click', function(e) {
+        if($(this)[0].checked === true) {
+            reloadRoundWorks(true);
+        } else {
+            reloadRoundWorks();
+        }
+    })
+
+    function reloadRoundWorks(onlyWon) {
+        var id = $('#e-ds-dlg-edit-round-fm_id').val();
+
+        if(typeof(id) == 'undefined' || id == "")
+            return;
+
+        var data = {};
+        data['filter.roundId'] = id;
+
+        if(typeof(onlyWon) != 'undefined' && onlyWon == true) {
+            data['filter.onlyWon'] = true;
+        }
+
+        $('#e-ds-dlg-dashboard-works-dg').datagrid('load', data);
+    }
+
+    function reloadRoundRaters() {
+        var id = $('#e-ds-dlg-edit-round-fm_id').val();
+
+        if(typeof(id) == 'undefined' || id == "")
+            return;
+
+        var data = {};
+        data['filter.roundId'] = id;
+        $('#e-ds-dlg-dashboard-raters-dg').datagrid('load', data);
+    }
+
+    function createRound() {
+        if(!$('#e-ds-dlg-add-round-fm').form('validate'))
+            return;
+
+        $('#fm-submit-mask').show();
+        var data = $('#e-ds-dlg-add-round-fm').serialize();
+
+        $.ajax({
+            url:'createRound_ajax',
+            type:'POST',
+            async:true,
+            data: data,
+            error:function(XMLHttpRequest, textStatus, errorThrown) {
+                $('#fm-submit-mask').hide();
+                euler.msg.response.error(XMLHttpRequest);
+            },
+            success:function(data, textStatus) {
+                $('#fm-submit-mask').hide();
+                onSearch();
+            }
+        });
+    }
+
+
+    function updateRound() {
+        if(!$('#e-ds-dlg-edit-round-fm').form('validate'))
+            return;
+
+        $('#fm-submit-mask').show();
+        var data = $('#e-ds-dlg-edit-round-fm').serialize();
+
+        $.ajax({
+            url:'updateRound_ajax',
+            type:'POST',
+            async:true,
+            data: data,
+            error:function(XMLHttpRequest, textStatus, errorThrown) {
+                $('#fm-submit-mask').hide();
+                euler.msg.response.error(XMLHttpRequest);
+            },
+            success:function(data, textStatus) {
+                $('#fm-submit-mask').hide();
+                onSearch();
+            }
+        });
+    }
+
+    function startRound() {
+        var rows = $('#e-dg').datagrid('getSelections');
+
+        if(rows == null || rows.length < 1){
+            euler.msg.error("请选择数据项");
+        } else {
+            euler.msg.confirm("<div style='color: #D8504D;font-size: 1.5em;margin-bottom: 5px;'>不可逆操作</div>确定启动所选的评审环节?", function(r) {
+                if(r) {$.ajax({
+                    url:'startRound_ajax',
+                    type:'POST',
+                    async:true,
+                    data: {roundId: rows[0].id},
+                    error:function(XMLHttpRequest, textStatus, errorThrown) {
+                        euler.msg.response.error(XMLHttpRequest);
+                    },
+                    success:function(data, textStatus) {
+                        onSearch();
+                    }
+                });
+                }
+            });
+        }
+
+    }
+
+    function stopRound() {
+        var rows = $('#e-dg').datagrid('getSelections');
+
+        if(rows == null || rows.length < 1){
+            euler.msg.error("请选择数据项");
+        } else {
+            euler.msg.confirm("<div style='color: #D8504D;font-size: 1.5em;margin-bottom: 5px;'>不可逆操作</div>确定结束所选的评审环节?", function(r) {
+                if(r) {
+                    $.ajax({
+                        url:'stopRound_ajax',
+                        type:'POST',
+                        async:true,
+                        data: {roundId: rows[0].id},
+                        error:function(XMLHttpRequest, textStatus, errorThrown) {
+                            euler.msg.response.error(XMLHttpRequest);
+                        },
+                        success:function(data, textStatus) {
+                            onSearch();
+                        }
+                    });
+                }
+            });
+        }
+
+    }
+
+    function openWorkSearchDlg(preRound) {
+
+        var params = '';
+        if(typeof(preRound) == 'undefined' || preRound == null || preRound == '') {
+            //NOTHING
+        } else {
+            $.ajax({
+                url:'findPreRound_ajax',
+                type:'POST',
+                async:false,
+                data: {roundId: $('#e-ds-dlg-edit-round-fm_id').val()},
+                error:function(XMLHttpRequest, textStatus, errorThrown) {
+                    euler.msg.response.error(XMLHttpRequest);
+                },
+                success:function(result, textStatus) {
+                    params = 'params=' + encodeURIComponent('filter.roundId=' + result.data.id + '&filter.won=true');
+                }
+            });
+
+            if(params == '') {
+                return;
+            }
+        }
+
+        euler.dialog('/design/admin/design/workSearcher', params, '添加作品', function(data) {
+            var formData = new FormData();
+            formData.append("id", $('#e-ds-dlg-edit-round-fm_id').val());
+            for(var i = 0; i < data.length; i++){
+                formData.append("workId[]", data[i].id);
+            }
+            $.ajax({
+                url:'addWorkToRound_ajax',
+                type:'POST',
+                async:true,
+                contentType: false,
+                cache: false,
+                processData: false,
+                data: formData,
+                error:function(XMLHttpRequest, textStatus, errorThrown) {
+                    euler.msg.response.error(XMLHttpRequest);
+                },
+                success:function(data, textStatus) {
+                    reloadRoundWorks();
+                }
+            });
+        });
+    }
+
+    function onDeleteWork() {
+        var row = $('#e-ds-dlg-dashboard-works-dg').datagrid('getSelections');
+
+        if(row == null || row.length < 1){
+            euler.msg.error("请选择要删除的作品");
+        } else if(row){
+            euler.msg.confirm("确定删除选定作品？", function(r) {
+                if(r) {
+                    var formData = new FormData();
+                    formData.append("id", $('#e-ds-dlg-edit-round-fm_id').val());
+                    for(var i = 0; i < row.length; i++){
+                        formData.append("workId[]", row[i].id);
+                    }
+
+                    $.ajax({
+                        url:'deleteWorkFromRound_ajax',
+                        type:'POST',
+                        async:true,
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        data: formData,
+                        error:function(XMLHttpRequest, textStatus, errorThrown) {
+                            euler.msg.response.error(XMLHttpRequest);
+                        },
+                        success:function(data, textStatus) {
+                            reloadRoundWorks();
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+    function openRaterSearchDlg() {
+        var params = 'showRaterGroup=true&params=' + encodeURIComponent('filter.groupId=677ee187-61b3-486b-9f3b-fd84f95a0408');
+
+        euler.dialog('/design/admin/design/userSearcher', params, '添加评委', function(data) {
+            var formData = new FormData();
+            formData.append("id", $('#e-ds-dlg-edit-round-fm_id').val());
+            for(var i = 0; i < data.length; i++){
+                formData.append("userId[]", data[i].id);
+            }
+            $.ajax({
+                url:'addUserToRound_ajax',
+                type:'POST',
+                async:true,
+                contentType: false,
+                cache: false,
+                processData: false,
+                data: formData,
+                error:function(XMLHttpRequest, textStatus, errorThrown) {
+                    euler.msg.response.error(XMLHttpRequest);
+                },
+                success:function(data, textStatus) {
+                    reloadRoundRaters();
+                }
+            });
+        });
+
+
+
+    }
+
+    function onDeleteRater() {
+        var row = $('#e-ds-dlg-dashboard-raters-dg').datagrid('getSelections');
+
+        if(row == null || row.length < 1){
+            euler.msg.error("请选择要删除的评委");
+        } else if(row){
+            euler.msg.confirm("确定删除选定评委？", function(r) {
+                if(r) {
+                    var formData = new FormData();
+                    formData.append("id", $('#e-ds-dlg-edit-round-fm_id').val());
+                    for(var i = 0; i < row.length; i++){
+                        formData.append("userId[]", row[i].id);
+                    }
+
+                    $.ajax({
+                        url:'deleteUserFromRound_ajax',
+                        type:'POST',
+                        async:true,
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        data: formData,
+                        error:function(XMLHttpRequest, textStatus, errorThrown) {
+                            euler.msg.response.error(XMLHttpRequest);
+                        },
+                        success:function(data, textStatus) {
+                            reloadRoundRaters();
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+    function openRoundConfirmDlg() {
+        var row = $('#e-dg').datagrid('getSelections');
+
+        if(row == null || row.length < 1){
+            euler.msg.error("请选择评审轮次");
+        } else if(row){
+            euler.dialog('/design/admin/design/ratingConfirm/' + row[0].id, null, '确认获奖作品', function(data) {
+                var formData = new FormData();
+                formData.append("id", $('#e-ds-dlg-edit-round-fm_id').val());
+                for(var i = 0; i < data.length; i++){
+                    formData.append("workId[]", data[i].value);
+                }
+                $.ajax({
+                    url:'confirmRound_ajax',
+                    type:'POST',
+                    async:true,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    data: formData,
+                    error:function(XMLHttpRequest, textStatus, errorThrown) {
+                        euler.msg.response.error(XMLHttpRequest);
+                    },
+                    success:function(data, textStatus) {
+                        onSearch();
+                    }
+                });
+            });
+        }
+    }
+
+    function unConfirmRound() {
+        var row = $('#e-dg').datagrid('getSelections');
+
+        if(row == null || row.length < 1){
+            euler.msg.error("请选择评审轮次");
+        } else if(row){
+            euler.msg.confirm("确定取消获奖作品确认？", function(r) {
+                if(r) {
+
+                    $.ajax({
+                        url:'unconfirmRound_ajax',
+                        type:'POST',
+                        async:true,
+                        data: {id: $('#e-ds-dlg-edit-round-fm_id').val()},
+                        error:function(XMLHttpRequest, textStatus, errorThrown) {
+                            euler.msg.response.error(XMLHttpRequest);
+                        },
+                        success:function(data, textStatus) {
+                            onSearch();
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+    function roundStatusFormatter(value, row, index) {
+        switch(value) {
+            case "WAITING": return "等待开始";
+            case "RUNNING": return "评审中";
+            case "WAIT_CONFIRM": return "评审结束, 等待确认获奖结果";
+            case "DOWN": return "评审结束, 已确认获奖结果";
+        }
+    }
+</script>
+</body>
+
+</html>
